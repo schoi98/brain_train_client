@@ -1,18 +1,22 @@
 import React from 'react';
 
-import { Typography } from '@material-ui/core';
+import { AppBar, Typography } from '@material-ui/core';
 
 import Problem from '../Problem/Problem';
 
 const Drill = () => {
-  const timer;
-  const count;
+  const timer = 0;
+  let count = 0; // Use state hooks later to update value of counter
 
   return (
     <div>
-      <Typography> Time Left: {timer}</Typography>
-      <Typography> Problems Solved: {count} </Typography>
-      <Problem first={first} second={second} operation={operation}/>
+      <AppBar position="static" color="inherit">
+        <Typography> Time Left: {timer}</Typography>
+        <Typography> Problems Solved: {count} </Typography>
+      </AppBar>
+      <Problem />
     </div>
   )
 }
+
+export default Drill;
