@@ -1,89 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 
 import { Typography, TextField } from '@material-ui/core';
-class Problem extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.operation = '';
-    this.x = 0;
-    this.y = 0;
-    this.ans = 0;
-    this.solved = false;
-    this.generateProblem();
+import generateProblem from './Generator';
+
+const Problem = (props) => {
+
+  let values = [];
+  const [solved, setSolved] = useState(false);
+
+  if (values.length < 1) {
+    values = generateProblem(props.bounds[0], props.bounds[1], props.bounds[2], props.bounds[3],
+      props.bounds[4], props.bounds[5], props.bounds[6], props.bounds[7]);
   }
 
-  generateXAddSub = () => {
-    return Math.floor(Math.random() * Math.floor(this.props.upperBound - this.props.lowerBound)) + this.props.lowerBound;
+  const updateProblem = () => {
+    values = generateProblem(props.bounds[0], props.bounds[1], props.bounds[2], props.bounds[3],
+      props.bounds[4], props.bounds[5], props.bounds[6], props.bounds[7]);
   }
 
-  generateYAddSub = () => {
-    return Math.floor(Math.random() * Math.floor(this.props.upperBound - this.props.lowerBound)) + this.props.lowerBound;
-  }
-
-  generateXMultDiv = () => {
-     return Math.floor(Math.random() * Math.floor(this.props.mdUpperBound - this.props.lowerBound)) + this.props.lowerBound;
-  }
-
-  generateYMultDiv = () => {
-    return Math.floor(Math.random() * Math.floor(this.props.upperBound - this.props.lowerBound)) + this.props.lowerBound;
-  }
-
-  generateProblem = () => {
-    const ops = "+-*/"
-    const op = Math.floor(Math.random() * 3);
-    switch (ops[op]) {
-      case '+':
-        this.operation = '+';
-        this.x = this.generateXAddSub();
-        this.y = this.generateYAddSub();
-        this.ans = this.x + this.y;
-        break;
-      case '-':
-        this.operation = '-';
-        this.x = this.generateXAddSub();
-        this.y = this.generateYAddSub()
-        this.ans = this.x - this.y;
-        break;
-      case '*':
-        this.operation = 'x';
-        this.x = this.generateXMultDiv();
-        this.y = this.generateYMultDiv()
-        this.ans = this.x * this.y;
-        break;
-      case '/':
-        this.operation = '/';
-        this.x = this.generateXAddSub();
-        this.y = this.generateYAddSub()
-        this.ans = this.x + this.y;
-        break;
-      default:
-        console.log('Something went wrong');
+  const handleTextField = (ans) =>  {
+    if (parseInt(ans) && parseInt(ans) === values[2]) {
+      console.log('yey')
+      setSolved(true);
+      updateProblem();
+      console.log(values);
     }
   }
 
-  handleTextField = (e) =>  {
-    const ans = e.target.value;
-    console.log(ans);
-    if (parseInt(ans) && parseInt(ans) === this.ans) {
-      console.log("correct")
-      this.generateProblem();
-      this.solved = !this.solved;
-    }
-  }
-
-  render() {
-    return (
+  return (
+  <div>
     <div>
-      <div>
-        <Typography>{this.solved ? this.x + " " + this.operation + " " + this.y : this.x + " " + this.operation + " " + this.y} = </Typography>
-        <form>
-          <TextField  onChange={this.handleTextField}>Answer</TextField>
-        </form>
-      </div>
+      <Typography>{`${values[0]} ${values[3]} ${values[1]}`} = </Typography>
+      <TextField  onChange={(e) => {handleTextField(e.target.value)}}></TextField>
     </div>
-    );
-  }
+  </div>
+  );
 }
 
 export default Problem;
