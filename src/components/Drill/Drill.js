@@ -6,15 +6,19 @@ import Problem from '../Problem/Problem';
 
 const Drill = () => {
   const timer = 0;
-  let count = 0; // Use state hooks later to update value of counter
+  const lowerBound = 2;
+  const upperBound = 100;
+  const mdUpperBound = 12;
 
+  let count = 0;
+  
   return (
     <div>
       <AppBar position="static" color="inherit">
         <Typography> Time Left: {timer}</Typography>
         <Typography> Problems Solved: {count} </Typography>
       </AppBar>
-      <Problem />
+      <Problem lowerBound={lowerBound} upperBound={upperBound} mdUpperBound={mdUpperBound}/>
     </div>
   )
 }
