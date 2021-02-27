@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useRef } from 'react';
 
 import { Typography, TextField } from '@material-ui/core';
 
@@ -6,33 +6,25 @@ import generateProblem from './Generator';
 
 const Problem = (props) => {
 
-  let values = [];
-  const [solved, setSolved] = useState(false);
-
-  if (values.length < 1) {
-    values = generateProblem(props.bounds[0], props.bounds[1], props.bounds[2], props.bounds[3],
-      props.bounds[4], props.bounds[5], props.bounds[6], props.bounds[7]);
+  let [problem, setProblem] = useState([]);
+  if (problem.length < 1) {
+    problem = generateProblem(props.bounds);
   }
-
-  const updateProblem = () => {
-    values = generateProblem(props.bounds[0], props.bounds[1], props.bounds[2], props.bounds[3],
-      props.bounds[4], props.bounds[5], props.bounds[6], props.bounds[7]);
-  }
+  const ansInput = useRef(null);
 
   const handleTextField = (ans) =>  {
-    if (parseInt(ans) && parseInt(ans) === values[2]) {
-      console.log('yey')
-      setSolved(true);
-      updateProblem();
-      console.log(values);
+    if (parseInt(ans) && parseInt(ans) === problem[2]) {
+      setProblem(generateProblem(props.bounds));
+      props.callbackProblem();
+      ansInput.current.value = '';
     }
   }
 
   return (
   <div>
     <div>
-      <Typography>{`${values[0]} ${values[3]} ${values[1]}`} = </Typography>
-      <TextField  onChange={(e) => {handleTextField(e.target.value)}}></TextField>
+      <Typography>{`${problem[0]} ${problem[3]} ${problem[1]}`} = </Typography>
+      <TextField inputRef={ansInput} autoFocus onChange={({target}) => {handleTextField(target.value)}}></TextField>
     </div>
   </div>
   );

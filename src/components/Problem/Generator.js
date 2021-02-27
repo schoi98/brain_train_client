@@ -30,7 +30,8 @@ const generateDiv = (low1, up1, low2, up2) => {
   return [x, y, ans];
 }
 
-const generateProblem = (addLow1, addUp1, addLow2, addUp2, multLow1, multUp1, multLow2, multUp2) => {
+const generateProblem = (bounds) => {
+  const [addLow1, addUp1, addLow2, addUp2, multLow1, multUp1, multLow2, multUp2] = bounds;
   const ops = "+-*/"
   let operation = '';
   let values = [];
