@@ -14,18 +14,16 @@ const Problem = (props) => {
 
   const handleTextField = (ans) =>  {
     if (parseInt(ans) && parseInt(ans) === problem[2]) {
+      props.callbackProblem(problem);
       setProblem(generateProblem(props.bounds));
-      props.callbackProblem();
       ansInput.current.value = '';
     }
   }
 
   return (
   <div>
-    <div>
-      <Typography>{`${problem[0]} ${problem[3]} ${problem[1]}`} = </Typography>
-      <TextField inputRef={ansInput} autoFocus onChange={({target}) => {handleTextField(target.value)}}></TextField>
-    </div>
+      <div><Typography variant="h4">{`${problem[0]} ${problem[3]} ${problem[1]}`} = </Typography></div>
+      <div><TextField inputRef={ansInput} autoFocus size="medium" onChange={({target}) => {handleTextField(target.value)}}></TextField></div>
   </div>
   );
 }

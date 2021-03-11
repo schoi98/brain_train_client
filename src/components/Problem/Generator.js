@@ -53,7 +53,7 @@ const generateProblem = (bounds) => {
       values.push(operation);
       return values;
     case '/':
-      operation = '/';
+      operation = '÷';
       values = generateDiv(multLow1, multUp1, multLow2, multUp2);
       values.push(operation);
       return values;
